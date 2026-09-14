@@ -1,0 +1,50 @@
+:root {
+    /* Tell the browser to use dark mode defaults for native UI elements (scrollbars, popovers) */
+    color-scheme: dark;
+    
+    /* Color Palette: AMOLED Dark by default */
+    --bg-color: #000000;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --accent-color: #ffffff;
+    --overlay-bg: rgba(20, 20, 20, 0.95);
+    
+    /* Dynamic SVG Chevron for dropdowns (White) */
+    --select-arrow: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    
+    /* Typography */
+    --font-ui: 'Inter', -apple-system, sans-serif;
+    --font-time: 'Roboto Mono', monospace;
+    
+    /* Font Weights */
+    --weight-time: 300;
+    
+    /* Fluid Sizing for the Main Time Display */
+    /* Scales dynamically based on viewport width, clamped to sane min/max values */
+    --time-size: clamp(4rem, 15vw, 20rem);
+    --ui-size: 1rem;
+    
+    /* Spacing & Layout */
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    
+    /* Transitions for smooth UX */
+    --transition-fast: 0.2s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Light Theme overrides */
+body.theme-light {
+    /* Tell the browser to use light mode defaults for native UI */
+    color-scheme: light;
+    
+    --bg-color: #f5f5f5;
+    --text-primary: #111111;
+    --text-secondary: #666666;
+    --accent-color: #111111;
+    --overlay-bg: rgba(255, 255, 255, 0.95);
+    
+    /* Dynamic SVG Chevron for dropdowns (Dark) */
+    --select-arrow: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}

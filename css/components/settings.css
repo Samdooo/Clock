@@ -1,0 +1,164 @@
+/* 
+ * css/components/settings.css
+ * Styles for the slide-out settings panel and its internal forms.
+ */
+
+.settings-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+    z-index: 90;
+}
+
+.settings-backdrop.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 350px;
+    height: 100vh;
+    background-color: var(--bg-color);
+    border-left: 1px solid var(--text-secondary);
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform var(--transition-slow), background-color var(--transition-slow);
+    overflow-y: auto;
+}
+
+/* Custom Minimalist Scrollbar for Settings Panel */
+.settings-panel::-webkit-scrollbar {
+    width: 6px;
+}
+.settings-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+.settings-panel::-webkit-scrollbar-thumb {
+    background-color: var(--text-secondary);
+    border-radius: 10px;
+}
+
+.settings-panel.open {
+    transform: translateX(0);
+}
+
+.settings-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--text-secondary);
+    padding-bottom: var(--spacing-md);
+}
+
+.settings-header h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.settings-group h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.setting-item.toggle-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Base styling for selects and text/number inputs */
+select, 
+input[type="number"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-color); /* Explicitly match theme to prevent white dropdowns */
+    color: var(--text-primary);
+    border: 1px solid var(--text-secondary);
+    border-radius: 6px; /* Smoother edges */
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Custom dropdown styling */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.5rem; /* Make room for the custom arrow */
+    background-image: var(--select-arrow);
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Style the inner options list for browsers (Chrome/Edge/Firefox) that support it */
+select option {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
+
+/* Focus states with a subtle crisp ring */
+select:focus,
+input[type="number"]:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+/* Number input specific tweaks */
+input[type="number"] {
+    font-family: var(--font-time);
+}
+
+input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--text-primary);
+    cursor: pointer;
+}
+
+
+/* --- CONTEXT AWARE SETTINGS DISPLAY LOGIC --- */
+
+.app-setting-group {
+    display: none; 
+}
+
+.app-setting-group.active {
+    display: flex; 
+}

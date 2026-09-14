@@ -1,0 +1,181 @@
+/* --- Resets --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; 
+    
+    display: grid;
+    grid-template-rows: auto 1fr;
+    transition: background-color var(--transition-slow);
+}
+
+/* --- Typography --- */
+.time-display {
+    font-family: var(--font-time);
+    font-size: var(--time-size);
+    font-weight: var(--weight-time);
+    text-align: center;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums; 
+}
+
+/* --- Layout Zones --- */
+.app-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+}
+
+nav {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+#app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: var(--spacing-lg); 
+}
+
+.app-controls {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+/* --- UI Controls & Buttons --- */
+button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: var(--ui-size);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+button:hover, .nav-btn.active {
+    color: var(--text-primary);
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.8rem 2.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-primary);
+    background-color: transparent;
+    transition: all var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.control-btn:hover:not(:disabled) {
+    background-color: var(--text-primary);
+    color: var(--bg-color);
+    border-color: var(--text-primary);
+}
+
+.control-btn.primary {
+    background-color: var(--text-primary);
+    color: var(--bg-color);
+    border-color: var(--text-primary);
+}
+
+.control-btn.primary:hover:not(:disabled) {
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.control-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.preset-btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: rgba(128, 128, 128, 0.15);
+    color: var(--text-secondary);
+}
+
+.preset-btn:hover:not(:disabled) {
+    background-color: rgba(128, 128, 128, 0.3);
+    color: var(--text-primary);
+}
+
+/* NEW: Clean inline time inputs for the custom timer form */
+.time-input {
+    width: 3rem;
+    background: transparent;
+    color: var(--text-primary);
+    border: none;
+    border-bottom: 2px solid var(--text-secondary);
+    font-family: var(--font-time);
+    font-size: 1rem;
+    text-align: center;
+    padding: 0.2rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+    -moz-appearance: textfield; /* Hides default arrows in Firefox */
+}
+
+/* Hides default arrows in Chrome/Safari */
+.time-input::-webkit-outer-spin-button,
+.time-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.time-input:focus {
+    border-bottom-color: var(--text-primary);
+}
+
+.time-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.3;
+}
+
+/* --- Idle Fading Logic --- */
+.ui-element {
+    transition: opacity var(--transition-slow);
+    opacity: 1;
+}
+
+body.idle .ui-element {
+    opacity: 0;
+    pointer-events: none; 
+}
+
+/* --- Overlays --- */
+.hidden {
+    display: none !important;
+}

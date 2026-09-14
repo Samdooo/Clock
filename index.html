@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Peio Clock</title>
+    
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Fonts: Inter for UI, Roboto Mono for numbers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Roboto+Mono:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components/settings.css">
+</head>
+<body>
+    <!-- Top Navigation: Switching Apps -->
+    <header class="app-nav ui-element">
+        <nav>
+            <button class="nav-btn active" data-app="clock">Clock</button>
+            <button class="nav-btn" data-app="stopwatch">Stopwatch</button>
+            <button class="nav-btn" data-app="countdown">Timer</button>
+            <button class="nav-btn" data-app="pomodoro">Pomodoro</button>
+        </nav>
+        <button id="settings-toggle" class="icon-btn ui-element" aria-label="Settings">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+    </header>
+
+    <!-- Main Display: The Timepiece & Controls -->
+    <main id="app-container">
+        <h1 class="time-display" id="main-time">00:00</h1>
+        <!-- Controls moved directly under the time display -->
+        <div class="app-controls ui-element" id="main-controls">
+            <!-- Dynamically populated based on active app -->
+        </div>
+    </main>
+
+    <!-- Settings Overlay -->
+    <div id="settings-backdrop" class="settings-backdrop"></div>
+    <aside id="settings-panel" class="settings-panel">
+        <div class="settings-content">
+            <header class="settings-header">
+                <h2>Settings</h2>
+                <button id="settings-close" class="icon-btn" aria-label="Close Settings">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </header>
+
+            <!-- GLOBAL SETTINGS -->
+            <section class="settings-group">
+                <h3>Global</h3>
+                <div class="setting-item">
+                    <label for="setting-theme">Theme</label>
+                    <select id="setting-theme">
+                        <option value="dark">AMOLED Dark</option>
+                        <option value="light">Minimal Light</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- CLOCK SETTINGS -->
+            <section class="settings-group app-setting-group" data-app-group="clock">
+                <h3>Clock Config</h3>
+                <div class="setting-item">
+                    <label for="setting-clock-format">Time Format</label>
+                    <select id="setting-clock-format">
+                        <option value="24">24-Hour</option>
+                        <option value="12">12-Hour</option>
+                    </select>
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-clock-seconds">Show Seconds</label>
+                    <input type="checkbox" id="setting-clock-seconds">
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-clock-zero">Leading Zero (e.g. 09:00)</label>
+                    <input type="checkbox" id="setting-clock-zero">
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-clock-blink">Blinking Colon</label>
+                    <input type="checkbox" id="setting-clock-blink">
+                </div>
+            </section>
+
+            <!-- STOPWATCH SETTINGS -->
+            <section class="settings-group app-setting-group" data-app-group="stopwatch">
+                <h3>Stopwatch Config</h3>
+                <div class="setting-item">
+                    <label for="setting-sw-ms">Milliseconds Precision</label>
+                    <select id="setting-sw-ms">
+                        <option value="0">Off</option>
+                        <option value="1">1-Digit (Tenths)</option>
+                        <option value="2">2-Digit (Hundredths)</option>
+                        <option value="3">3-Digit (Thousandths)</option>
+                    </select>
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-sw-force-hours">Always Show Hours</label>
+                    <input type="checkbox" id="setting-sw-force-hours">
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-sw-zero">Leading Zero (Minutes)</label>
+                    <input type="checkbox" id="setting-sw-zero">
+                </div>
+            </section>
+
+            <!-- COUNTDOWN TIMER SETTINGS -->
+            <section class="settings-group app-setting-group" data-app-group="countdown">
+                <h3>Timer Config</h3>
+                <div class="setting-item">
+                    <label for="setting-cd-ms">Milliseconds Precision</label>
+                    <select id="setting-cd-ms">
+                        <option value="0">Off</option>
+                        <option value="1">1-Digit (Tenths)</option>
+                        <option value="2">2-Digit (Hundredths)</option>
+                        <option value="3">3-Digit (Thousandths)</option>
+                    </select>
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-cd-force-hours">Always Show Hours</label>
+                    <input type="checkbox" id="setting-cd-force-hours">
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-cd-zero">Leading Zero (Minutes)</label>
+                    <input type="checkbox" id="setting-cd-zero">
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-cd-restart">Auto-Restart at Zero</label>
+                    <input type="checkbox" id="setting-cd-restart">
+                </div>
+            </section>
+
+            <!-- POMODORO SETTINGS -->
+            <section class="settings-group app-setting-group" data-app-group="pomodoro">
+                <h3>Pomodoro Config</h3>
+                <div class="setting-item">
+                    <label for="setting-pomo-work">Work Duration (m)</label>
+                    <input type="number" id="setting-pomo-work" min="1" max="120" step="1">
+                </div>
+                <div class="setting-item">
+                    <label for="setting-pomo-short">Short Break (m)</label>
+                    <input type="number" id="setting-pomo-short" min="1" max="30" step="1">
+                </div>
+                <div class="setting-item">
+                    <label for="setting-pomo-long">Long Break (m)</label>
+                    <input type="number" id="setting-pomo-long" min="1" max="60" step="1">
+                </div>
+                <div class="setting-item">
+                    <label for="setting-pomo-sessions">Sessions Before Long Break</label>
+                    <input type="number" id="setting-pomo-sessions" min="1" max="10" step="1">
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-pomo-auto-break">Auto-Start Breaks</label>
+                    <input type="checkbox" id="setting-pomo-auto-break">
+                </div>
+                <div class="setting-item toggle-item">
+                    <label for="setting-pomo-auto-work">Auto-Start Work</label>
+                    <input type="checkbox" id="setting-pomo-auto-work">
+                </div>
+            </section>
+        </div>
+    </aside>
+
+    <!-- Main Entry Point -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
